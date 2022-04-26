@@ -37,7 +37,7 @@
 
 .item {
     width: fit-content;
-    border-style: solid;
+    //border-style: solid;
 }
 
 .itemName {
@@ -64,3 +64,35 @@
     margin: 0 0 0 0;
     text-align: center;
 }
+
+.itemList {
+    //display: flex;
+    //flex-direction: row;
+    list-style: none;
+  //margin: 2em;
+  display: grid;
+  grid-gap: 20px;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));
+}
+
+.itemList > .item {
+    width: fit-content;
+    border-style: solid;
+    margin-right: 1rem;
+}
+
+.itemList > .item > .itemDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.itemList > .item > .itemTitle {
+    text-align: center;
+}
+
+.itemList > .item > .itemDetails > .itemImage {
+    max-width: 100%;
+    height: auto;
+}
+
