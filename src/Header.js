@@ -3,7 +3,7 @@ import NavBar from "./component/NavBar";
 const Header = () => {
     return (
         <header className="header">
-            <NavBar/>
+            <NavBar name="Poke TGC"/>
         </header>
         
     )

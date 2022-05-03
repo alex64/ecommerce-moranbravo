@@ -1,4 +1,6 @@
 
+import { BrowserRouter } from "react-router-dom";
+
 import Footer from "./Footer";
 import Main from "./Main";
 import Header from "./Header";
@@ -6,9 +8,11 @@ import Header from "./Header";
 const App = () => {
     return (
         <>
-            <Header/>
-            <Main/>
-            <Footer/>
+            <BrowserRouter>
+                <Header/>
+                <Main/>
+                <Footer/>
+            </BrowserRouter> 
         </>
     )
 }

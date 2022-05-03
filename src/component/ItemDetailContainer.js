@@ -1,41 +1,38 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ItemDetail from "./ItemDetail";
-import poke1 from "../images/en_US-SWSH9-032-corphish-1.webp"
+import tgcList from "./tcgItems";
 
-const itemDescription = {
-        id: 1,
-        title: "Corphis",
-        set: "Brilliant Stars",
-        rarity: "Common",
-        number: "31/172",
-        pictureUrl: poke1,
-        stock: 10,
-        type: "Basic Pokemon",
-        price: 0.02,
-        cardText: "No matter how dirty the water in the river, it will adapt and thrive. It has a strong will to survive.",
-        category: ["Pokemon", "Common"]
+const getItem = (id) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            const cardElement = tgcList.filter((card) => {
+                return Number(id) === card.id;
+            })[0];
+            resolve(cardElement);
+        }, 2000);
+    });
 }
-
-const getItem = new Promise((resolve, reject) => {
-    setTimeout(()=>{
-        resolve(itemDescription);
-    }, 2000);
-});
 
 const ItemDetailContainer = () => {
 
     const [itemDetail, setItemDetail] = useState({});
+    const [loaded, setLoaded] = useState(false);
+    const {id} = useParams();
+
+
 
     useEffect(() => {
-        getItem
+        getItem(id)
             .then((itemDet) => {
                 console.log(itemDet);
                 setItemDetail(itemDet);
+                setLoaded(true);
             })
     }, []);
 
     let returnDetail;
-    if(Object.keys(itemDetail).length === 0 && itemDetail.constructor === Object) {
+    if(!loaded) {
         returnDetail = <p>Loading...</p>
     }
     else {

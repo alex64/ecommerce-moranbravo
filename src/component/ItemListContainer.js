@@ -1,42 +1,27 @@
 import { useEffect, useState } from "react";
-//import ItemCount from "./ItemCount";
+import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
-import poke1 from "../images/en_US-SWSH9-032-corphish-1.webp"
-import poke2 from "../images/en_US-SWSH9-049-shinx.webp"
-import poke3 from "../images/en_US-SWSH9-074-trapinch.webp"
+import tgcList from "./tcgItems";
 
-const productsArray = [
-    {
-        id: 1,
-        title: "Corphis",
-        description: "SWSH09: Brilliant Stars",
-        price: 0.02,
-        pictureUrl: poke1,
-        stock: 10
-    },
-    {
-        id: 2,
-        title: "Shinx",
-        description: "SWSH09: Brilliant Stars",
-        price: 0.13,
-        pictureUrl: poke2,
-        stock: 5
-    },
-    {
-        id: 3,
-        title: "Trapinch",
-        description: "SWSH09: Brilliant Stars",
-        price: 0.02,
-        pictureUrl: poke3,
-        stock: 15
-    }
-];
-
-const serverCall = new Promise((resolve, reject) => {
-    setTimeout(()=>{
-        resolve(productsArray);
-    }, 2000);
-});
+const getItemList = (selectedCategory) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            if(selectedCategory === undefined) {
+                resolve(tgcList);
+            }
+            else {
+                const categoryCards = tgcList.filter((card) => {
+                    const categoryResult = card.category.filter((indiviualCategory) => {
+                        console.log(indiviualCategory);
+                        return indiviualCategory.toLowerCase() === selectedCategory.toLowerCase();
+                    });
+                    return categoryResult.length > 0;
+                });
+                resolve(categoryCards);
+            }
+        }, 2000);
+    });
+}
 
 const ItemListContainer = ({greeting}) => {
 
@@ -44,26 +29,44 @@ const ItemListContainer = ({greeting}) => {
         console.log(`Adding ${count} items`);
     }*/
 
+    const [loaded, setLoaded] = useState(false);
     const [productList, setProductList] = useState([]);
+    const {id} = useParams();
     
     useEffect(() => {
-        serverCall
+        setProductList([]);
+        setLoaded(false);
+        getItemList(id)
             .then((productArray) => {
                 setProductList(productArray);
+                setLoaded(true);
             })
             /*.catch((err) => {
                 console.log(err);
             });*/
         
-    }, []);
+    }, [id]);
+
+    const greetingMessage = <p className="itemContainerGreeting">{greeting}</p>;
+    let returnList
+    if(!loaded) {
+        returnList = <p>Loading...</p>
+    }
+    else {
+        returnList = <ItemList productList={productList}/>
+    }
 
     return (
         <>
-            <p className="itemContainerGreeting">{greeting}</p>
-            {/* <ItemCount name="Laptop 1" init={1} stock={10} onAdd={onAdd} /> */}
-            <ItemList productList={productList}/>
+            {greetingMessage}
+            {returnList}
         </>
         
+        /*<>
+            <p className="itemContainerGreeting">{greeting}</p>*/
+            /* <ItemCount name="Laptop 1" init={1} stock={10} onAdd={onAdd} /> */
+            /*returnList
+        </>*/
     )
 }
 
