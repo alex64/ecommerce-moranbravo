@@ -24,11 +24,6 @@ const getItemList = (selectedCategory) => {
 }
 
 const ItemListContainer = ({greeting}) => {
-
-    /*const onAdd = (count) => {
-        console.log(`Adding ${count} items`);
-    }*/
-
     const [loaded, setLoaded] = useState(false);
     const [productList, setProductList] = useState([]);
     const {id} = useParams();
@@ -61,12 +56,6 @@ const ItemListContainer = ({greeting}) => {
             {greetingMessage}
             {returnList}
         </>
-        
-        /*<>
-            <p className="itemContainerGreeting">{greeting}</p>*/
-            /* <ItemCount name="Laptop 1" init={1} stock={10} onAdd={onAdd} /> */
-            /*returnList
-        </>*/
     )
 }
 

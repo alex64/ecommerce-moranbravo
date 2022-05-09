@@ -40,6 +40,34 @@ const tgcList = [
         "pictureUrl": require("../images/en_US-SWSH9-074-trapinch.webp"),
         "stock": 15,
         "category": ["Pokemon", "UltraRare", "Basic", "Ground"]
+    },
+    {
+        "id": 4,
+        "title": "Sableye",
+        "description": "SWSH07: Evolving Skies",
+        "set": "Evolving Skies",
+        "rarity": "Common",
+        "number": "67/203",
+        "type": "Basic Pokemon",
+        "cardText": "It feeds on gemstone crystals. In darkness, its eyes sparkle with the glitter of jewels.",
+        "price": 0.5,
+        "pictureUrl": require("../images/en_US-SWSH7-067-sableye.webp"),
+        "stock": 5,
+        "category": ["Pokemon", "Common", "Basic", "Psychic"]
+    },
+    {
+        "id": 5,
+        "title": "Zorua",
+        "description": "SWSH07: Evolving Skies",
+        "set": "Evolving Skies",
+        "rarity": "Common",
+        "number": "102/203",
+        "type": "Basic Pokemon",
+        "cardText": "If a normally talkative child suddenly stops talking, it may have been replaced by Zorua.",
+        "price": 1.01,
+        "pictureUrl": require("../images/en_US-SWSH7-102-zorua.webp"),
+        "stock": 1,
+        "category": ["Pokemon", "Common", "Basic", "Dark"]
     }
 ]
 

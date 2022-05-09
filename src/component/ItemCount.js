@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ItemCount = ({name, init, stock, onAdd}) => {
+const ItemCount = ({init, stock, onAdd}) => {
     let [count, setCount] = useState(init);
 
     const increaseItemCount = () => {
@@ -23,13 +23,12 @@ const ItemCount = ({name, init, stock, onAdd}) => {
 
     return (
         <div className="item">
-            <p className="itemName">{name}</p>
             <div className="itemCountMgr">
-                <button className="itemDecrease" onClick={decreaseItemCount}>-</button>
+                <button className="itemDecrease" onClick={decreaseItemCount}><span className="material-icons">remove</span></button>
                 <p className="itemCount">{count}</p>
-                <button className="itemIncremeant" onClick={increaseItemCount}>+</button>
+                <button className="itemIncremeant" onClick={increaseItemCount}><span className="material-icons">add</span></button>
             </div>
-            <button className="itemAdd" onClick={addItem}>Add Item</button>
+            <button className="itemAdd" onClick={addItem}>Add to Cart</button>
         </div>
     )
 }
