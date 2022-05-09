@@ -68,6 +68,20 @@ const tgcList = [
         "pictureUrl": require("../images/en_US-SWSH7-102-zorua.webp"),
         "stock": 1,
         "category": ["Pokemon", "Common", "Basic", "Dark"]
+    },
+    {
+        "id": 6,
+        "title": "Toxtricity",
+        "description": "SF: Shining Fates",
+        "set": "Shining Fates",
+        "rarity": "Rare",
+        "number": "SV042/SV122",
+        "type": "Stage 1",
+        "cardText": "When this Pokémon sounds as if it’s strumming a guitar, it’s actually clawing at the protrusions on its chest to generate electricity.",
+        "price": 2.25,
+        "pictureUrl": require("../images/en_US-SF-SV042-toxtricity.webp"),
+        "stock": 3,
+        "category": ["Pokemon", "Rare", "Stage 1", "Electric", "Shiny"]
     }
 ]
 
