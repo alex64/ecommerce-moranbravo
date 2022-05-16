@@ -9,7 +9,17 @@ const CartContext = ({children}) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
 
+    const calculateTotalPrice = (addedItemPrice) => {
+        setTotalPrice(totalPrice + addedItemPrice);
+    }
+
+    const calculateTotalQuantity = (addedQuantity) => {
+        setTotalQuantity(totalQuantity + addedQuantity);
+    }
+
     const addItem = (item, quantity) => {
+        calculateTotalPrice(item.price * quantity);
+        calculateTotalQuantity(quantity);
         if(!isInCart(item.id)) {
             setCart([...cart, {item, quantity}]);
         }
@@ -26,7 +36,11 @@ const CartContext = ({children}) => {
     }
 
     const removeItem = (itemId) => {
-
+        console.log("Deleting Item");
+        const itemToRemove = getCartItem(itemId);
+        calculateTotalPrice(itemToRemove.item.price * itemToRemove.quantity * -1);
+        calculateTotalQuantity(itemToRemove.quantity * -1);
+        setCart(cart.filter(cartItem=>cartItem.item.id !== itemId));
     }
 
     const clear = () => {

@@ -12,7 +12,7 @@ const getItemList = (selectedCategory) => {
             else {
                 const categoryCards = tgcList.filter((card) => {
                     const categoryResult = card.category.filter((indiviualCategory) => {
-                        console.log(indiviualCategory);
+                        //console.log(indiviualCategory);
                         return indiviualCategory.toLowerCase() === selectedCategory.toLowerCase();
                     });
                     return categoryResult.length > 0;
