@@ -1,46 +1,40 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { collection, getDocs, where, query } from "firebase/firestore";
 import ItemList from "./ItemList";
-import tgcList from "./tcgItems";
-
-const getItemList = (selectedCategory) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(()=>{
-            if(selectedCategory === undefined) {
-                resolve(tgcList);
-            }
-            else {
-                const categoryCards = tgcList.filter((card) => {
-                    const categoryResult = card.category.filter((indiviualCategory) => {
-                        //console.log(indiviualCategory);
-                        return indiviualCategory.toLowerCase() === selectedCategory.toLowerCase();
-                    });
-                    return categoryResult.length > 0;
-                });
-                resolve(categoryCards);
-            }
-        }, 2000);
-    });
-}
+import { db } from "../firebase";
 
 const ItemListContainer = ({greeting}) => {
     const [loaded, setLoaded] = useState(false);
     const [productList, setProductList] = useState([]);
-    const {id} = useParams();
+    const {categoryId} = useParams();
     
     useEffect(() => {
-        setProductList([]);
-        setLoaded(false);
-        getItemList(id)
+        const getTCGItemCollection = collection(db, "tgclist");
+        let tgcQuery;
+        if(categoryId === undefined) {
+            tgcQuery = getDocs(getTCGItemCollection);
+        } else {
+            const categoryFilter = query(getTCGItemCollection, where("category", "array-contains", categoryId));
+            tgcQuery = getDocs(categoryFilter);
+        }
+
+        tgcQuery
             .then((productArray) => {
-                setProductList(productArray);
+                const productData = productArray.docs.map((doc)=> {
+                    const data = doc.data();
+                    data.id = doc.id;
+                    return data;
+                  });
+
+                setProductList(productData);
                 setLoaded(true);
             })
-            /*.catch((err) => {
+            .catch((err) => {
                 console.log(err);
-            });*/
+            });
         
-    }, [id]);
+    }, [categoryId]);
 
     const greetingMessage = <p className="itemContainerGreeting">{greeting}</p>;
     let returnList
