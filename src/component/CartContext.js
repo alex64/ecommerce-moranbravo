@@ -24,10 +24,11 @@ const CartContext = ({children}) => {
             setCart([...cart, {item, quantity}]);
         }
         else {
-            console.log("Updating quantity");
+            //Make the copy of the cart first.
+            //Then, add the quantity.
+            //Finally, use the setCart to update with the copy
             setCart(cart.map(cartItem => {
                 if(cartItem.item.id === item.id) {
-                    console.log(`Previous: ${cartItem.quantity}`);
                     cartItem.quantity += quantity;
                 }
                 return cartItem;
@@ -36,15 +37,16 @@ const CartContext = ({children}) => {
     }
 
     const removeItem = (itemId) => {
-        console.log("Deleting Item");
         const itemToRemove = getCartItem(itemId);
         calculateTotalPrice(itemToRemove.item.price * itemToRemove.quantity * -1);
         calculateTotalQuantity(itemToRemove.quantity * -1);
         setCart(cart.filter(cartItem=>cartItem.item.id !== itemId));
     }
 
-    const clear = () => {
-
+    const clearCart = () => {
+        setCart([]);
+        setTotalPrice(0);
+        setTotalQuantity(0);
     }
 
     const isInCart = (id) => {
@@ -62,7 +64,7 @@ const CartContext = ({children}) => {
         totalQuantity,
         addItem,
         removeItem,
-        clear,
+        clearCart,
         isInCart
     };
 
