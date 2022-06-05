@@ -24,9 +24,6 @@ const CartContext = ({children}) => {
             setCart([...cart, {item, quantity}]);
         }
         else {
-            //Make the copy of the cart first.
-            //Then, add the quantity.
-            //Finally, use the setCart to update with the copy
             setCart(cart.map(cartItem => {
                 if(cartItem.item.id === item.id) {
                     cartItem.quantity += quantity;

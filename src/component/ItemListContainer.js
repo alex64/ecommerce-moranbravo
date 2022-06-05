@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
-import ItemList from "./ItemList";
 import { db } from "../firebase";
+import ItemList from "./ItemList";
+import ErrorDetail from "./ErrorDetail";
 
 const ItemListContainer = ({greeting}) => {
     const [loaded, setLoaded] = useState(false);
     const [productList, setProductList] = useState([]);
+    const [ errorData, setErrorData ] = useState({});
     const {categoryId} = useParams();
     
     useEffect(() => {
@@ -30,26 +32,32 @@ const ItemListContainer = ({greeting}) => {
                 setProductList(productData);
                 setLoaded(true);
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((queryError) => {
+                console.log(queryError);
+                setErrorData( {
+                    id: 'I102',
+                    message: queryError.message
+                });
             });
         
     }, [categoryId]);
 
-    const greetingMessage = <p className="itemContainerGreeting">{greeting}</p>;
-    let returnList
-    if(!loaded) {
-        returnList = <p>Loading...</p>
-    }
-    else {
-        returnList = <ItemList productList={productList}/>
-    }
+    return (        
+        <div>
+            <p className="itemContainerGreeting">{greeting}</p>
 
-    return (
-        <>
-            {greetingMessage}
-            {returnList}
-        </>
+            {
+                Object.keys(errorData).length > 0 && errorData.constructor === Object
+                ? 
+                    <ErrorDetail errorData={errorData} disableHomeButton={categoryId===undefined}/> 
+                :
+                    !loaded
+                    ?
+                        <p>Loading...</p>
+                    :
+                        <ItemList productList={productList}/>
+            }
+        </div>
     )
 }
 

@@ -1,22 +1,23 @@
 
 import { BrowserRouter } from "react-router-dom";
 
-import Footer from "./Footer";
 import Main from "./Main";
-import Header from "./Header";
 import CartContext from "./component/CartContext";
+import NavBar from "./component/NavBar";
 
 const App = () => {
     return (
-        <>
-            <BrowserRouter>
-                <CartContext>
-                    <Header/>
-                    <Main/>
-                </CartContext>
-                <Footer/>
-            </BrowserRouter> 
-        </>
+        <BrowserRouter>
+            <CartContext>
+                <header className="header">
+                    <NavBar name="Poke TGC"/>
+                </header>
+                <Main/>
+            </CartContext>
+            <footer>
+                <p>Copyright &copy; -2022</p>
+            </footer>
+        </BrowserRouter> 
     )
 }
 

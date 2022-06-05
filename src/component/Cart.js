@@ -4,10 +4,12 @@ import CartList from "./CartList";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import ErrorDetail from "./ErrorDetail";
 
 const Cart = () => {
 
     const [ orderId, setOrder ] = useState('');
+    const [ errorData, setErrorData ] = useState({});
     const navigate = useNavigate();
     const { cart, totalPrice, totalQuantity, removeItem, clearCart } = useContext(cartContext);
     
@@ -30,7 +32,6 @@ const Cart = () => {
             "date": Date.now(),
             "total": totalPrice
         }
-        //Adding to database
         const tgcOrderCollection = collection(db, "tgcorder"); 
         const addQuery = addDoc(tgcOrderCollection, order);
         addQuery
@@ -38,8 +39,12 @@ const Cart = () => {
                 setOrder(orderId.id);
                 clearCart();
             })
-            .catch((orderError) => {
-                console.log("Error in the order: " + orderError);
+            .catch((queryError) => {
+                const errorMessage = `${queryError.message}. Try again later or contact administrator.`
+                setErrorData( {
+                    id: 'P101',
+                    message: errorMessage
+                });
             });
         
     }
@@ -56,19 +61,24 @@ const Cart = () => {
     }
 
     return (
-        totalQuantity === 0
-        ?<div className="cartNoItem">
-            {cartTextQZ}
-            <button onClick={handleBuyItem}>{cartActionQZ}</button>
-        </div>
-        :<div className="cart">
-            <CartList cartList={cart} deleteElement={deleteCartItem}/>
-            <div className="cartPrice">
-                <h2>Total Price: ${totalPrice}</h2>
-                <h3>Items: {totalQuantity}</h3>
-                <button onClick={completePurchaseAction}>Complete Purchase</button>
+        totalQuantity === 0 
+        ?
+            <div className="cartNoItem">
+                {cartTextQZ}
+                <button onClick={handleBuyItem}>{cartActionQZ}</button>
+            </div> 
+        :
+            <div className="cart">
+                <CartList cartList={cart} deleteElement={deleteCartItem}/>
+                <div className="cartPrice">
+                    <h2>Total Price: ${totalPrice}</h2>
+                    <h3>Items: {totalQuantity}</h3>
+                    <button onClick={completePurchaseAction}>Complete Purchase</button>
+                    { 
+                        Object.keys(errorData).length > 0 && errorData.constructor === Object ? <ErrorDetail errorData={errorData} disableHomeButton={true}/>:<></>
+                    }
+                </div>
             </div>
-        </div>
     )
 }
 
