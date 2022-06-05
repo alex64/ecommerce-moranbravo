@@ -7,7 +7,7 @@ const ItemDetail = ({item}) => {
 
     const navigate = useNavigate();
     const [countItem, setCountItem] = useState(0);
-    const { addItem } = useContext(cartContext);
+    const { addItem, stockInCart } = useContext(cartContext);
 
     const onAdd = (quantityToAdd) => {
         setCountItem(quantityToAdd);
@@ -18,14 +18,7 @@ const ItemDetail = ({item}) => {
         navigate('/cart');
     }
 
-    let itemAction;
-
-    if(countItem > 0) {
-        itemAction = <button onClick={goToCart}>Complete Purchase</button>;
-    }
-    else {
-        itemAction = <ItemCount init={1} stock={item.stock} onAdd={onAdd}/>
-    }
+    const currentStock = item.stock - stockInCart(item.id);
 
     return (
         <div className="itemDetailContainer">
@@ -49,9 +42,19 @@ const ItemDetail = ({item}) => {
                     }
                 </div>
                 <div className="itemDetailPurchaseMenu">
-                    <p className="itemDetailPurchaseStock">Stock: {item.stock}</p>
+                    <p className="itemDetailPurchaseStock">Stock: {currentStock}</p>
                 </div>
-                {itemAction}
+                {
+                    countItem > 0 
+                    ?
+                        <button onClick={goToCart}>Complete Purchase</button>
+                    :
+                        currentStock > 0 
+                        ?
+                            <ItemCount init={1} stock={currentStock} onAdd={onAdd}/>
+                        :
+                            <p>No more stock</p>
+                }
             </div>
         </div>
         

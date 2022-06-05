@@ -54,4 +54,9 @@ Creadad para proveer un espacio donde se tenga informacion sobre Pokemon TGC par
     - npm start
 
 # Funcionalodad de Componentes/Metodos
-N/A
+## Control de Stock
+El control de stock se maneja directamente en el Front-End en base a los elementos del carrito el cual solo afectara para la compra actual. Una vez que se registre la compra, el stock se reestablecera a como esta definida en la base de datos.
+- En CartContext, se genero un metodo llamado stockInCart, el cual nos regresa la cantidad de un item en el carrito.
+- En ItemDetail, revisamos la cantidad de stock disponible de un item se le resta a la cantidad que hay en el carrito para actualizar el stock disponible para esa compra.
+    - Si no hay stock disponible, no aparecera el componente de ItemCount y solo habra una etiquta mencionando que no hay stock disponble.
+- Una vez completada la compra o cuando el item es eliminado del carrito, el stock volvera a estar disponble.

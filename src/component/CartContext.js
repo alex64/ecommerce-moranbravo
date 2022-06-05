@@ -23,13 +23,13 @@ const CartContext = ({children}) => {
         if(!isInCart(item.id)) {
             setCart([...cart, {item, quantity}]);
         }
-        else {
+        else {            
             setCart(cart.map(cartItem => {
                 if(cartItem.item.id === item.id) {
                     cartItem.quantity += quantity;
                 }
                 return cartItem;
-            }));
+            }));              
         }
     }
 
@@ -54,6 +54,11 @@ const CartContext = ({children}) => {
     const getCartItem = (id) => {
         return cart.find((cartItem) => cartItem.item.id === id);
     }
+    
+    const stockInCart = (id) => {
+        const cartItem = getCartItem(id);
+        return cartItem !== undefined ? cartItem.quantity:0;
+    }
 
     const cartContextValue = {
         cart,
@@ -62,7 +67,8 @@ const CartContext = ({children}) => {
         addItem,
         removeItem,
         clearCart,
-        isInCart
+        isInCart,
+        stockInCart
     };
 
     return (

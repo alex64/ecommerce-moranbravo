@@ -14,9 +14,7 @@ const Item = ({product}) => {
             <div className="itemDetails">
                 <p>Description: {product.description}</p>
                 <p>Price: {product.price}</p>
-                <img className="itemImage" src={product.pictureUrl}/>
-                <p>Stock: {product.stock}</p>
-
+                <img alt={product.title} className="itemImage" src={product.pictureUrl}/>
                 <button onClick={handleSeeDetail}>See Detail</button>
             </div>
             
