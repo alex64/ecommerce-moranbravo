@@ -80,3 +80,6 @@ La Wish List se meneja de manera similar al carrito (usando un contexto). La fun
             - Si se agrega otra vez el elemento al carrito, aumentara la cantidad del mismo producto.
         - En caso de que no haya stock del producto, aparecera un mensaje y solo permitira eliminarlo.
     - Borrar el elemento de la wish list
+
+# Deploy
+https://beamish-pegasus-6efb37.netlify.app/
