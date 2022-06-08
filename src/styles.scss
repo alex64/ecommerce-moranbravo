@@ -7,13 +7,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: greenyellow;
+    background-color: rgb(10, 182, 177);
 
     nav {
         a {
             margin-left: 1rem;
         }
     }
+}
+
+.footer {
+    margin-top: 1rem;
+    background-color: rgb(10, 182, 177);
 }
 
 .nav {
@@ -131,7 +136,7 @@
     text-decoration: none;
 }
 
-.cartDetail {
+.cartDetail, .wishDetail {
     display: flex;
     flex-direction: row;
     border: solid;
@@ -140,28 +145,43 @@
     min-width: 30rem;
 }
 
-.cartDetail > .cartDetailImage {
+.cartDetail > .cartDetailImage, .wishDetail > .wishDetailImage {
     min-width: 200px;
     width: 200px;
     height: 100%;
 }
 
-.cartDetail > .cartDetailImage > .cartImage {
+.cartDetail > .cartDetailImage > .cartImage,  .wishDetail > .wishDetailImage > .wishImage {
     margin-right: 2rem;
     height: 90%;
     width: 90%;
 }
 
-.cartDetail > .cartDetailData {
+.cartDetail > .cartDetailData , .wishDetail > .wishDetailData {
     max-width: 50%;
     min-width: 50%;
 }
 
-.cartDetail > .cartDetailData > .cartDetailDataQuantity {
+.cartDetail > .cartDetailData > .cartDetailDataQuantity, .wishDetail > .wishDetailData > .wishDetailDataQuantity {
     display: flex;
     flex-direction: row;
 }
 
 .cartDetailDataQuantityDelete{
     margin-left: 2rem;
+}
+
+.cartForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 20rem;
+    min-width: 10rem;
+}
+
+.cartForm > .formText {
+    max-width:fit-content;
+}
+
+.cartForm > .formSubmit {
+    max-width:fit-content;
 }

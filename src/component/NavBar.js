@@ -13,6 +13,7 @@ const NavBar = ({name}) => {
                 <Link to="/category/rare" className="navbar_link">Rare</Link>
                 <Link to="/category/ultrarare" className="navbar_link">Ultra Rare</Link>
             </nav>
+            <Link to="wishlist" className="navbar_link">WishList</Link>
             <CartWidget/>
         </>
     )

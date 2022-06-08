@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useCallback } from "react";
 import { cartContext } from "./CartContext";
 import CartList from "./CartList";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,9 @@ const Cart = () => {
 
     const [ orderId, setOrder ] = useState('');
     const [ errorData, setErrorData ] = useState({});
+    const [ name, setName ] = useState('default_user');
+    const [ phone, setPhone ] = useState('1234');
+    const [ email, setEmail ] = useState('default@default.com');
     const navigate = useNavigate();
     const { cart, totalPrice, totalQuantity, removeItem, clearCart } = useContext(cartContext);
     
@@ -17,16 +20,28 @@ const Cart = () => {
         navigate('/');
     }
 
-    const deleteCartItem = (productId) => {
+    const deleteCartItem = useCallback((productId) => {
         removeItem(productId);
+    }, [removeItem]);
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    }
+
+    const handlePhoneChange = (event) => {
+        setPhone(event.target.value);
+    }
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
     }
 
     const completePurchaseAction = () => {
         const order = {
             "buyer": {
-                "name": "testUser",
-                "phone": 1234,
-                "email": "test@test.com"
+                name,
+                phone,
+                email
             },
             "items": cart,
             "date": Date.now(),
@@ -56,7 +71,7 @@ const Cart = () => {
         cartActionQZ = 'Buy Items';
     }
     else {
-        cartTextQZ = <p>Your order is {orderId}</p>
+        cartTextQZ = <p>Thank you, {name}!. Your order is {orderId}</p> 
         cartActionQZ = 'Continue buying';
     }
 
@@ -73,8 +88,13 @@ const Cart = () => {
                 <div className="cartPrice">
                     <h2>Total Price: ${totalPrice}</h2>
                     <h3>Items: {totalQuantity}</h3>
-                    <button onClick={completePurchaseAction}>Complete Purchase</button>
-                    { 
+                    <div className="cartForm">
+                        Name: <input className="formText" type="text" onChange={handleNameChange} placeholder={name}/>
+                        Phone: <input className="formText" type="text" onChange={handlePhoneChange} placeholder={phone}/>
+                        E-mail: <input className="formText" type="text" onChange={handleEmailChange} placeholder={email}/>
+                        <button onClick={completePurchaseAction}>Complete Purchase</button>
+                    </div>
+                    {
                         Object.keys(errorData).length > 0 && errorData.constructor === Object ? <ErrorDetail errorData={errorData} disableHomeButton={true}/>:<></>
                     }
                 </div>

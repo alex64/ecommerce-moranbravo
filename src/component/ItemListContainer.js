@@ -33,7 +33,6 @@ const ItemListContainer = ({greeting}) => {
                 setLoaded(true);
             })
             .catch((queryError) => {
-                console.log(queryError);
                 setErrorData( {
                     id: 'I102',
                     message: queryError.message

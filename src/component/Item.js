@@ -13,7 +13,7 @@ const Item = ({product}) => {
             <h3 className="itemTitle">{product.title}</h3>
             <div className="itemDetails">
                 <p>Description: {product.description}</p>
-                <p>Price: {product.price}</p>
+                <p>Price: ${product.price}</p>
                 <img alt={product.title} className="itemImage" src={product.pictureUrl}/>
                 <button onClick={handleSeeDetail}>See Detail</button>
             </div>

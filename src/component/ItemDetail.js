@@ -2,16 +2,25 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartContext } from "./CartContext";
 import ItemCount from "./ItemCount";
+import { wishListContext } from "./WishListContext";
 
 const ItemDetail = ({item}) => {
 
     const navigate = useNavigate();
     const [countItem, setCountItem] = useState(0);
+    const [ wishListStatus, setWishListStatus ] = useState({itemAdded: false, itemExists: false});
     const { addItem, stockInCart } = useContext(cartContext);
+    const { addWishItem, isInWishList } = useContext(wishListContext);
 
     const onAdd = (quantityToAdd) => {
         setCountItem(quantityToAdd);
         addItem(item, quantityToAdd);
+    }
+
+    const onAddWishList = () => {
+        const itemExists = isInWishList(item.id)
+        const itemAdded = addWishItem(item);
+        setWishListStatus({itemAdded, itemExists});
     }
 
     const goToCart = () => {
@@ -51,7 +60,24 @@ const ItemDetail = ({item}) => {
                     :
                         currentStock > 0 
                         ?
-                            <ItemCount init={1} stock={currentStock} onAdd={onAdd}/>
+                            <div>
+                                {
+                                    !wishListStatus.itemExists && !wishListStatus.itemAdded
+                                    ?
+                                        <button onClick={onAddWishList}>Add to Wish List</button> 
+                                    :
+                                        wishListStatus.itemExists
+                                        ?
+                                            <p>Item Already exists in Wish List</p>
+                                        :
+                                            <p>Item Added to Wish List</p>
+                                }
+                                
+                                <div>
+                                    
+                                    <ItemCount init={1} stock={currentStock} onAdd={onAdd}/>
+                                </div>
+                            </div>        
                         :
                             <p>No more stock</p>
                 }

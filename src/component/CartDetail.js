@@ -1,12 +1,16 @@
+import { memo } from "react";
+
 const CartDetail = ({cartDetail, deleteElement}) => {
     const handleDeleteClick = () => {
         deleteElement(cartDetail.item.id);
     }
 
+    console.log("test");
+
     return (
         <div className="cartDetail">
             <div className="cartDetailImage">
-                <img className="cartImage" src={cartDetail.item.pictureUrl}/>
+                <img alt={cartDetail.item.title} className="cartImage" src={cartDetail.item.pictureUrl}/>
             </div>
             <div className="cartDetailData">
                 <div className="cartDetailDataDesc">
@@ -24,4 +28,4 @@ const CartDetail = ({cartDetail, deleteElement}) => {
     )
 }
 
-export default CartDetail;
+export default memo(CartDetail);

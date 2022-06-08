@@ -54,9 +54,29 @@ Creadad para proveer un espacio donde se tenga informacion sobre Pokemon TGC par
     - npm start
 
 # Funcionalodad de Componentes/Metodos
+## Formulario
+El usuario puede agregar su nombre, telefono, y correo al pedido.
+En caso de no hacerlo, se usaran los valores que vienen por default (mostrados en el placeholder).
+Para evitar que los hijos del componente se creen cada vez que se hace un cambio en los inputs, se esta usando memo para los componentes hijos y el useCallback para el metodo que se usa para eliminar.
+- Los elementos en el carrito solo se volveran a crear en caso de que se borren elementos del carrito.
+
 ## Control de Stock
 El control de stock se maneja directamente en el Front-End en base a los elementos del carrito el cual solo afectara para la compra actual. Una vez que se registre la compra, el stock se reestablecera a como esta definida en la base de datos.
 - En CartContext, se genero un metodo llamado stockInCart, el cual nos regresa la cantidad de un item en el carrito.
 - En ItemDetail, revisamos la cantidad de stock disponible de un item se le resta a la cantidad que hay en el carrito para actualizar el stock disponible para esa compra.
     - Si no hay stock disponible, no aparecera el componente de ItemCount y solo habra una etiquta mencionando que no hay stock disponble.
 - Una vez completada la compra o cuando el item es eliminado del carrito, el stock volvera a estar disponble.
+
+## Wish List
+La Wish List se meneja de manera similar al carrito (usando un contexto). La funcionalidad es:
+- Si navegamos a la wish list vacia, nos mostrara un mensaje y un boton para navegar al Landing.
+- En cada producto (ItemDetail), tenemos la posibilidad de agregarlo a la la Wish List mediante un boton.
+    - Una vez agregado, se mostrara un mensaje que indique la accion.
+    - Si se trata de agregar un producto que ya este en la wish list, se mostrara un mensaje que indique esto.
+- En la wish list con elementos podemos:
+    - Agregar al carrito
+        - Al agregar, aparecera un mensaje que diga que fue agregado y se mostrar un boton para navegar al carrito.
+            - Ya en el carrito, se vera que se agrego un solo producto.
+            - Si se agrega otra vez el elemento al carrito, aumentara la cantidad del mismo producto.
+        - En caso de que no haya stock del producto, aparecera un mensaje y solo permitira eliminarlo.
+    - Borrar el elemento de la wish list

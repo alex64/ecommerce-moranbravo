@@ -60,6 +60,11 @@ const CartContext = ({children}) => {
         return cartItem !== undefined ? cartItem.quantity:0;
     }
 
+    const isStockAvailable = (id, quantity) => {
+        const cartItem = getCartItem(id);
+        return cartItem !== undefined ? cartItem.quantity + quantity <= cartItem.item.stock:true;
+    }
+
     const cartContextValue = {
         cart,
         totalPrice,
@@ -68,7 +73,8 @@ const CartContext = ({children}) => {
         removeItem,
         clearCart,
         isInCart,
-        stockInCart
+        stockInCart,
+        isStockAvailable
     };
 
     return (
